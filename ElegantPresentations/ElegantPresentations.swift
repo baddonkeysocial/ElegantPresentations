@@ -26,9 +26,6 @@ public struct ElegantPresentations {
                 presentingViewController presenting: UIViewController?,
                 options: Set<PresentationOption>) -> UIPresentationController
     {
-        
-        let options = PresentationOptions(options: options)
-        
         return ElegantPresentationController(presentedViewController: presented, presentingViewController: presenting, options: options)
     }
 }

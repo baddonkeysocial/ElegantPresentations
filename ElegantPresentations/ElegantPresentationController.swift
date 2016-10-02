@@ -45,8 +45,8 @@ class ElegantPresentationController: UIPresentationController, UIGestureRecogniz
      
      - returns: An initialized presentation controller object.
      */
-    init(presentedViewController: UIViewController, presentingViewController: UIViewController?, options: PresentationOptions) {
-        self.options = options
+    init(presentedViewController: UIViewController, presentingViewController: UIViewController?, options: Set<PresentationOption>) {
+        self.options = PresentationOptions(options: options)
         super.init(presentedViewController: presentedViewController, presenting: presentingViewController)
     }
     
