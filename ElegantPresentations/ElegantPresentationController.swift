@@ -10,7 +10,7 @@ import UIKit
 
 typealias CoordinatedAnimation = (UIViewControllerTransitionCoordinatorContext?) -> Void
 
-class ElegantPresentationController: UIPresentationController, UIGestureRecognizerDelegate {
+public class ElegantPresentationController: UIPresentationController, UIGestureRecognizerDelegate {
     
     
     // MARK: - Properties
@@ -45,7 +45,7 @@ class ElegantPresentationController: UIPresentationController, UIGestureRecogniz
      
      - returns: An initialized presentation controller object.
      */
-    init(presentedViewController: UIViewController, presentingViewController: UIViewController?, options: Set<PresentationOption>) {
+    public init(presentedViewController: UIViewController, presentingViewController: UIViewController?, options: Set<PresentationOption>) {
         self.options = PresentationOptions(options: options)
         super.init(presentedViewController: presentedViewController, presenting: presentingViewController)
     }
@@ -53,7 +53,7 @@ class ElegantPresentationController: UIPresentationController, UIGestureRecogniz
     
     // MARK: - Presenting and dismissing
     
-    override func presentationTransitionWillBegin() {
+    override public func presentationTransitionWillBegin() {
         
         // If the option is set, then add the gesture recognizer for dismissal to the container
         if options.dimmingViewTapDismisses {
@@ -75,7 +75,7 @@ class ElegantPresentationController: UIPresentationController, UIGestureRecogniz
         transtionWithCoordinator(animations)
     }
     
-    override func dismissalTransitionWillBegin() {
+    override public func dismissalTransitionWillBegin() {
         
         // Animate these properties with the transtion coordinator if possible
         let animations: CoordinatedAnimation = { [unowned self] _ in
@@ -89,7 +89,7 @@ class ElegantPresentationController: UIPresentationController, UIGestureRecogniz
     
     // MARK: - Adaptation
     
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    override public func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         
         /* 
          There's a bug when rotating that makes the presented view controller permanently 
@@ -110,7 +110,7 @@ class ElegantPresentationController: UIPresentationController, UIGestureRecogniz
         coordinator.animate(alongsideTransition: animations, completion: nil)
     }
     
-    override func size(forChildContentContainer container: UIContentContainer, withParentContainerSize parentSize: CGSize) -> CGSize {
+    override public func size(forChildContentContainer container: UIContentContainer, withParentContainerSize parentSize: CGSize) -> CGSize {
         
         // Percent height doesn't make sense as a negative value or greater than zero, so we'll enforce it
         let percentHeight = min(abs(options.presentedPercentHeight), 1)
@@ -126,7 +126,7 @@ class ElegantPresentationController: UIPresentationController, UIGestureRecogniz
         return parentSize
     }
     
-    override var frameOfPresentedViewInContainerView: CGRect {
+    override public var frameOfPresentedViewInContainerView: CGRect {
         
         // Grab the parent and child sizes
         let parentSize = containerView!.bounds.size
@@ -159,7 +159,7 @@ class ElegantPresentationController: UIPresentationController, UIGestureRecogniz
 
     // MARK: UIGestureRecognizerDelegate protocol methods
 
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         let pointInPresentedView = touch.location(in: presentedViewController.view)
         return !presentedViewController.view.frame.contains(pointInPresentedView)
     }
