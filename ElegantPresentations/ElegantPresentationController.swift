@@ -10,7 +10,7 @@ import UIKit
 
 typealias CoordinatedAnimation = (UIViewControllerTransitionCoordinatorContext?) -> Void
 
-public class ElegantPresentationController: UIPresentationController, UIGestureRecognizerDelegate {
+open class ElegantPresentationController: UIPresentationController, UIGestureRecognizerDelegate {
     
     
     // MARK: - Properties
@@ -53,7 +53,7 @@ public class ElegantPresentationController: UIPresentationController, UIGestureR
     
     // MARK: - Presenting and dismissing
     
-    override public func presentationTransitionWillBegin() {
+    override open func presentationTransitionWillBegin() {
         
         // If the option is set, then add the gesture recognizer for dismissal to the container
         if options.dimmingViewTapDismisses {
@@ -75,7 +75,7 @@ public class ElegantPresentationController: UIPresentationController, UIGestureR
         transtionWithCoordinator(animations)
     }
     
-    override public func dismissalTransitionWillBegin() {
+    override open func dismissalTransitionWillBegin() {
         
         // Animate these properties with the transtion coordinator if possible
         let animations: CoordinatedAnimation = { [unowned self] _ in
@@ -89,7 +89,7 @@ public class ElegantPresentationController: UIPresentationController, UIGestureR
     
     // MARK: - Adaptation
     
-    override public func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    override open func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         
         /* 
          There's a bug when rotating that makes the presented view controller permanently 
@@ -110,7 +110,7 @@ public class ElegantPresentationController: UIPresentationController, UIGestureR
         coordinator.animate(alongsideTransition: animations, completion: nil)
     }
     
-    override public func size(forChildContentContainer container: UIContentContainer, withParentContainerSize parentSize: CGSize) -> CGSize {
+    override open func size(forChildContentContainer container: UIContentContainer, withParentContainerSize parentSize: CGSize) -> CGSize {
         
         // Percent height doesn't make sense as a negative value or greater than zero, so we'll enforce it
         let percentHeight = min(abs(options.presentedPercentHeight), 1)
@@ -126,7 +126,7 @@ public class ElegantPresentationController: UIPresentationController, UIGestureR
         return parentSize
     }
     
-    override public var frameOfPresentedViewInContainerView: CGRect {
+    override open var frameOfPresentedViewInContainerView: CGRect {
         
         // Grab the parent and child sizes
         let parentSize = containerView!.bounds.size
